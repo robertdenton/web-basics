@@ -124,6 +124,164 @@ It's generally a good practice to simply create a new folder for each sub-page t
 
 There's a lot more that I could say about HTML but I'm kind of tired and I think that's all I want to write tonight. 
 
-### CSS & JS
+### CSS 
 
-Coming soon...
+WHile HTML is the content of a webpage, CSS is the styling like fonts, sizes and colors. Of course CSS is a handy acronym (Cascading Style Sheets). What CSS does is it targets specific elements of an HTML page. There are different ways to target content to style (elements, classes and IDs) but we'll get to that a bit later.
+
+While you can include CSS **inline** in an HTML document, generally CSS is written in it's own file with a `.CSS` extension and linked to from the HTML. You can have multiple CSS documents that target similar things, but the web page will only display the final style it's given. That's where the *cascade* in the Cascading Style Sheets comes in.
+
+You can think of it as a series of text messages. The first text says:
+
+>"Hey, let's meet at Café Roma at 7 p.m."
+
+Then you get another that says:
+
+>"Jk let's meet outside Taylor's at 7:30 p.m."
+
+...and then you get a third and final text that says: 
+
+>"Ok, sorry I'm running late, let's meet at my place at 8 p.m."
+
+Of course you would go off of the latest text. That's how CSS works. You can have multiple style sheets, but only the final command is used.
+
+Let's look at some examples.
+
+#### Elements
+
+Remember all those HTML tags? They're also called HTML elements. One of the most common is `<h1>`. By default, an h1 will be rendered as a bold 32px Times font. Let's pretend we want to change the font to a bold 24px Helvetica font. Here's how you would target an h1 element:
+
+```css
+// target the h1
+h1 {
+	// set the weight, see: https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight
+	font-weight: bold;
+	// set the size, see: https://developer.mozilla.org/en-US/docs/Web/CSS/font-size
+	font-size: 24px;
+	// set the font family, see: https://developer.mozilla.org/en-US/docs/Web/CSS/font-family
+	font-family: Helvetica, Arial, sans-serif;
+}
+```
+
+That make sense? Hopefully you noted the comments in the CSS. Unlike HTML where the comments look like `<!-- comment -->`, to comment out CSS you start a line with two forward slashes like this `// Comment`.
+
+You may be wondering why we set two fonts. Well, not all computers are loaded with every font. Historically, Windows machines didn't carry Helvetica, but they did have Arial. To be safe, just in case your user doesn't have either font, you tell the browser to use a generic sans-serif font. 
+
+Anyway, let's hammer this cascade thing home. If you have another CSS file loaded after the one above becuase you want to make the headline a different color, like red.
+
+```css
+h1 {
+	color: red;
+	font-size: 72px;
+}
+```
+
+Here we see a color selector given attribute of red. That's how we set the color of a font. And we bump up the font size a little to 72px. Because this stylesheet is loaded after the one above, the h1 will be displayed as a red, bold, 72px, Helvetica font.
+
+#### Classes
+
+For simple web pages you can usually get by with just targeting HTML elements but with complex websites you need to be able to target a bit more accurately. Say you have some long quotes in your page that you want to italicize. You code may look something like this: 
+
+```html
+<p>This is a sentance that introduces a long quote.</p>
+<p class="quote">This is the first graf of a long quote.</p>
+<p class="quote">This is the second graf of a long quote.</p>
+<p>And here we're back to your beautiful writing after the quote.</p>
+...
+<p class="quote">Here's another quote later on.</p>
+<p>And back to normal text.</p>
+```
+This is a perfect example of a time when using a class to target multiple elements is worthwhile. Classes are great because they can be re-used multiple times on a page and the styling is consistant. Moreover, you only have to write the styling once and you get to use it over and over again, keeping your site consistant.
+
+The CSS to target a clss looks like this:
+
+```css
+.quote{
+	font-style: italic;
+	font-family: Georgia, Times, serif;
+}
+```
+
+In CSS a class begins with a period followed by the name of the class, then you put in styling just like you would an element. In this case, our quote is in an italic Georgia font. If your computer doesn't have Georgia it will try Times or fall back to a standard serif font.
+
+#### IDs
+
+The main difference between IDs and classes is that you're only supposed to us an ID once per page. Other than that you can handle them the same way. Here's an example for a large flag across the top of your page.
+
+```html
+<h1 id="myflag">This is my super awesome website</h1>
+```
+
+and the CSS may look like:
+
+```css
+#myflag{
+	font-size: 120px;
+	color: red;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-family: Arial, sans-serif;
+}
+```
+
+You target an ID using pound (for those of you who have ever used a pay phone) or a hashtag (for those of you who have never used a pay phone) followed by the ID name. In his case your flag is an all 120px, upercase, bold, red, Arial font. Seems kind of tacky but it's your website...
+
+#### Wrapping up CSS
+
+There are a ton of other ways to use CSS other than just modifying the font and color of text. You can add borders, play with margins, set backgrounds and even do some basic hover functionality.
+
+### JS
+
+So, to be totally honest, I really don't like JavaScript. Using JavaScript to build websites is super hot right now and I'm not totally on board with that.
+
+![JS is so hot right now](https://cloud.githubusercontent.com/assets/4853944/15266080/26b62130-194e-11e6-9a08-4ed5c8208bfc.jpg)
+
+Don't get me wrong, when JavaScript works well it's *so* nice, but I deal with so much bad JavaScript that requires more JavaScript to fix, which is totally not how things should be done. Regardless of how I feel about it, JavaScript is absolutely necessary for any web designer to be aware of and understand.
+
+So what is JavaScript? Well, HTML provides the content and structure for a page, CSS provides the style and JavaScript provides the interactiveness. Is that a word? Whatever. Interactiveness. So at a really basic level you can use JavaScript to manipulate content and styles when the user interacts with your page. Let's try a brief example.
+
+```html
+<button id="button" onClick="changeColor()">Click this button to change the text color.</button>
+```
+
+And let's throw in some CSS...
+
+```css
+#button{
+	padding: 10px;
+	border: 1px solid black;
+}
+```
+
+And here's some JavaScript...
+
+```javascript
+function changeColor(){
+	document.getElementById("button").style.background='red';
+}
+```
+
+Ok, so what are we doing here? We set up a button in HTML with an ID of `#button` and when we click on it we want to fire the changeColor() function. This is a bit of JavaScript worked into our HTML. We give it a bit of styling just for fun. And we have the actual JavaScript. This defines the function that is called when we click the button. It says when this function is triggered then get the document (the HTML document) and look for this specific ID (#button in this case), and then change its style, specifically its background to be red.
+
+JavaScript can be loaded in from seperate files or included *inline* in HTML but it's usually best to separate them.
+
+#### jQuery
+
+This is something you will surely run into when you begin to do web development. I won't say much other than jQuery is a powerful tool to do stuff in JavaScript really easily. I strongly encourage you to learn some, what's called, vanilla, or plain, JavaScript before you start trying to be fancy with jQuery. It's a great tool but you'll never learn what's really going on if you just use jQuery all the time. Then when you get to an issue that jQuery doesn't solve you'll be in trouble.
+
+#### JavaScript wrap up
+
+I don't want to get too into JavaScript because it gets complicated quick. Hopefully this at least made sense, though I wouldn't expect you to go out and do a bunch of JavaScript tonight. Or maybe you will. Surprise me. No, just kidding, that would not be fun for you.
+
+## Next steps and resources
+
+By this point you should have realized that I have absolutely no idea what I'm talking about and should have jumped ship for literally any other web design tutorial. If you're still reading this you should know that I've spent the last five years of my life learning about this stuff and I'm still learning new things every day. There is **a lot** I don't know about web development and blah blah blah. That sentence was getting too long.
+
+Anyway, always use [MDN](https://developer.mozilla.org/en-US/) when you're looking up documentation. They also have some tutorials that I've never looked at but are probably pretty good. There's always things like CodeCademy although I've never really been wowed by any of their courses. Really the only way you're going to learn how to do this stuff is by trial and error. Try to make a really simple HTML-only webpage. Then add some CSS. Don't even worry about JavaScript until later. Much later. The first few basic websites you build shouldn't even need JavaScript.
+
+Learn about [responsive web design](http://alistapart.com/article/responsive-web-design). Learn about [HTML5](http://diveintohtml5.info/). Start using [developer tools to inspect CSS](https://developer.mozilla.org/en-US/Learn/Common_questions/What_are_browser_developer_tools) and see how other people build websites. Sign up for email news letters that interest you.
+
+Above all else, never stop learning. You don't just learn web development one day and become a master. The ground is always moving under your feet and just when you think you understand something, you read something that says the exact opposite.
+
+Feel free to contact me if you want to give me free things. Please to not contact me to tell me how many times I was wrong in the post. It was probably more than five times, but definitely less than 100.
+
+Ok, I'm going to go do something better with my time. Peace.
